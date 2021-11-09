@@ -1,0 +1,56 @@
+//c language ni sir
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
+#include<string.h>
+
+#define YAWI 7
+#define MAX 100
+
+int checkPrime(int n);
+void encrypt(int p, int q, char msg[]);
+
+int main(void){
+    int p, q;
+    char msg[MAX];
+
+    do{
+        printf("\nInput prime number:\t");
+        scanf("%d", &p);
+    }while(checkPrime(p) == 0 || p == 0 || p == 1);
+
+    do{
+        printf("\nInput another prime number:\t");
+        scanf("%d", &q);
+    }while(checkPrime(q) == 0 || q == 0 || q == 1 || p == q);
+
+    printf("\nInput string: \t");
+    scanf("%s", msg);
+
+    encrypt(p,q,msg);
+
+    return 0;
+}
+
+int checkPrime(int n){
+    int x, flag = sqrt(n);
+
+    for(x = 2; x <= flag; ++x){
+        if(n % x == 0){
+            return 0;
+        }
+    }
+    return 1;
+}
+
+void encrypt(int p, int q, char msg[]){
+    int x, e = YAWI, l = strlen(msg);
+    int m[MAX], n = p*q;
+
+    for(x = 0; x <= l; x++){
+        m[x] = pow(msg[x],e);
+        m[x] %= n;
+    }
+    printf("\nEncripted Message:\t%d\n",m);
+}
